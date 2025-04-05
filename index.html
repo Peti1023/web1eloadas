@@ -1,11 +1,64 @@
-<!DOCTYPE htmlm>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>asdasdasd</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web-programozás-1 Előadás Házi feladat</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>dda</h1>
+  <header>
+    <h1>Web-programozás-1 Előadás Házi feladat</h1>
+  </header>
+  <nav>
+    <ul>    
+      <li><a href="#" data-section="tableSection" class="active">Táblázat</a></li>
+      
+   
+    </ul>
+  </nav>
+  <aside>
+    <p>Itt lehetne extra információ vagy linkek</p>
+  </aside>
+  <div id="content">
+   
+    <section id="tableSection" class="content-section">
+      <h2>Táblázat CRUD Funkcionalitás</h2>
+      
+      <form id="tableForm">
+        <input type="hidden" id="rowId" value="">
+        <label>Név: <input type="text" id="name" required maxlength="30"></label>
+        <label>Magasság: <input type="number" id="height" required></label>
+        <label>Súly: <input type="number" id="weight" required></label>
+        <button type="submit" id="submitBtn">Create/Update</button>
+        <button type="button" id="resetBtn" onclick="document.getElementById('tableForm').reset();">Reset</button>
+      </form>
+      <!-- Szűrési mező -->
+      <label>Szűrés: <input type="text" id="filterInput" placeholder="Szűrj a név alapján"></label>
+      <!-- Táblázat -->
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th data-column="id">ID</th>
+            <th data-column="name">Név</th>
+            <th data-column="height">Magasság</th>
+            <th data-column="weight">Súly</th>
+            <th>Műveletek</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Ide kerülnek majd a sorok -->
+        </tbody>
+      </table>
+    </section>
+
+    
+      
+  <footer>
+    <p>Készítette: Fülöp Péter(GIOIS8) és Farkas Máté (HYDNQB)</p>
+  </footer>
+  <script src="script.js"></script>
 </body>
 </html>
