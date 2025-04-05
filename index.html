@@ -29,25 +29,32 @@
       
       <form id="tableForm">
         <input type="hidden" id="rowId" value="">
-        <label>Név: <input type="text" id="name" required maxlength="30"></label>
-        <label>Magasság: <input type="number" id="height" required></label>
-        <label>Súly: <input type="number" id="weight" required></label>
+        <label>Név: <input type="text" id="name" required  placeholder="Min. 7 karakter, max. 30"></label>
+        <label>Magasság: <input type="number" id="height" required placeholder="70 - 200 cm"></label>
+        <label>Súly: <input type="number" id="weight" required placeholder="1 - 150 kg"></label>
         <button type="submit" id="submitBtn">Create/Update</button>
         <button type="button" id="resetBtn" onclick="document.getElementById('tableForm').reset();">Reset</button>
       </form>
-      <!-- Szűrési mező -->
-      <label>Szűrés: <input type="text" id="filterInput" placeholder="Szűrj a név alapján"></label>
+     
       <!-- Táblázat -->
       <table id="dataTable">
         <thead>
-          <tr>
-            <th data-column="id">ID</th>
-            <th data-column="name">Név</th>
-            <th data-column="height">Magasság</th>
-            <th data-column="weight">Súly</th>
-            <th>Műveletek</th>
-          </tr>
-        </thead>
+            <tr>
+              <th data-column="id">ID</th>
+              <th data-column="name">Név</th>
+              <th data-column="height">Magasság</th>
+              <th data-column="weight">Súly</th>
+              <th>Műveletek</th>
+            </tr>
+            <tr>
+              <th><input type="text" class="columnFilter" data-column="id" placeholder="Szűrés ID-re"></th>
+              <th><input type="text" class="columnFilter" data-column="name" placeholder="Szűrés névre"></th>
+              <th><input type="text" class="columnFilter" data-column="height" placeholder="Szűrés magasságra"></th>
+              <th><input type="text" class="columnFilter" data-column="weight" placeholder="Szűrés súlyra"></th>
+              <th></th>
+            </tr>
+          </thead>
+          
         <tbody>
           <!-- Ide kerülnek majd a sorok -->
         </tbody>
