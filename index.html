@@ -16,6 +16,7 @@
     <ul>
       <li><a href="#" data-section="tableSection" class="active">Táblázat</a></li>
       <li><a href="#" data-section="chartSection">ChartJS</a></li>
+      <li><a href="#" data-section="ajaxSection">AJAX</a></li>
       <li><a href="#" data-section="html5Section">HTML5 példák</a></li>
     </ul>
   </nav>
@@ -25,6 +26,7 @@
   <div id="content">
     <section id="tableSection" class="content-section">
       <h2>Táblázat CRUD Funkcionalitás</h2>
+      <!-- Táblázat és űrlap -->
       <form id="tableForm">
         <input type="hidden" id="rowId" value="">
         <label>Név: <input type="text" id="name" required placeholder="Min. 7 karakter, max. 30"></label>
@@ -51,7 +53,7 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Ide kerülnek majd a sorok -->
+          <!-- Dinamikusan generált sorok -->
         </tbody>
       </table>
     </section>
@@ -77,6 +79,11 @@
         </tr>
       </table>
       <canvas id="chartCanvas" width="400" height="200"></canvas>
+    </section>
+    
+    <section id="ajaxSection" class="content-section" style="display:none">
+      <h2>AJAX</h2>
+      <!-- AJAX tartalom ide jön majd -->
     </section>
     
     <section id="html5Section" class="content-section" style="display:none">
