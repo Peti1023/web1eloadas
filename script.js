@@ -76,7 +76,7 @@ tableForm.addEventListener('submit', function(e) {
     const weight = parseInt(document.getElementById('weight').value);
     const rowId = document.getElementById('rowId').value;
   
-    // ✅ Validációk
+    //  Validációk
     if (name.length < 7 || name.length > 30) {
       alert("A név legalább 7 és legfeljebb 30 karakter hosszú lehet!");
       return;
@@ -92,7 +92,7 @@ tableForm.addEventListener('submit', function(e) {
       return;
     }
   
-    // ✅ Szerkesztés vagy új elem
+    //  Szerkesztés vagy új elem
     if (rowId) {
       const index = tableData.findIndex(item => item.id == rowId);
       if (index !== -1) {
@@ -122,7 +122,7 @@ function deleteRow(id) {
   renderTable();
 }
 
-// ✅ Szűrő mezők eseménykezelése
+//  Szűrő mezők eseménykezelése
 document.querySelectorAll('.columnFilter').forEach(input => {
   input.addEventListener('input', function() {
     const column = this.getAttribute('data-column');
@@ -133,7 +133,7 @@ document.querySelectorAll('.columnFilter').forEach(input => {
 
 
 
-// ✅ Rendezés oszlopokra kattintva
+//  Rendezés oszlopokra kattintva
 document.querySelectorAll('#dataTable th[data-column]').forEach(header => {
   header.addEventListener('click', function() {
     const column = this.getAttribute('data-column');
@@ -147,3 +147,65 @@ document.querySelectorAll('#dataTable th[data-column]').forEach(header => {
   });
 });
 
+// ---------- HTML5 PÉLDÁK ----------
+  
+  // Web Storage
+  document.getElementById('saveDataBtn').addEventListener('click', function() {
+    localStorage.setItem('myData', 'Ez egy példa adat.');
+    document.getElementById('storageOutput').innerText = 'Adat mentve a localStorage-be.';
+  });
+  document.getElementById('loadDataBtn').addEventListener('click', function() {
+    const data = localStorage.getItem('myData');
+    document.getElementById('storageOutput').innerText = data ? data : 'Nincs adat.';
+  });
+  
+  // Web Worker
+  let myWorker;
+  document.getElementById('startWorkerBtn').addEventListener('click', function() {
+    if (window.Worker) {
+      if (!myWorker) {
+        myWorker = new Worker('worker.js');
+        myWorker.onmessage = function(e) {
+          document.getElementById('workerOutput').innerText = 'Worker: ' + e.data;
+        }
+      }
+      myWorker.postMessage('start');
+    } else {
+      document.getElementById('workerOutput').innerText = 'Web Workers nem támogatott.';
+    }
+  });
+  
+  // Geolocation API
+  document.getElementById('getLocationBtn').addEventListener('click', function() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        document.getElementById('locationOutput').innerText =
+          `Szélesség: ${position.coords.latitude}, Hosszúság: ${position.coords.longitude}`;
+      });
+    } else {
+      document.getElementById('locationOutput').innerText = 'Geolocation nem támogatott.';
+    }
+  });
+  
+  // Drag and Drop
+  const dragSource = document.getElementById('dragSource');
+  const dropTarget = document.getElementById('dropTarget');
+  dragSource.addEventListener('dragstart', function(e) {
+    e.dataTransfer.setData('text/plain', 'Ez az adat.');
+  });
+  dropTarget.addEventListener('dragover', function(e) {
+    e.preventDefault();
+  });
+  dropTarget.addEventListener('drop', function(e) {
+    e.preventDefault();
+    dropTarget.innerText = 'Adat átvéve: ' + e.dataTransfer.getData('text/plain');
+  });
+  
+  // Canvas: Egyszerű rajz
+  const canvas = document.getElementById('myCanvas');
+  if (canvas.getContext) {
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'blue';
+    ctx.fillRect(10, 10, 100, 50);
+  }
+  
