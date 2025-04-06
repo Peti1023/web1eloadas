@@ -102,6 +102,7 @@ tableForm.addEventListener('submit', function(e) {
       tableData.push({id: currentId++, name, height, weight});
     }
   
+    document.getElementById('rowId').value = null;
     tableForm.reset();
     renderTable();
   });
@@ -151,7 +152,8 @@ document.querySelectorAll('#dataTable th[data-column]').forEach(header => {
   
   // Web Storage
   document.getElementById('saveDataBtn').addEventListener('click', function() {
-    localStorage.setItem('myData', 'Ez egy példa adat.');
+    const data = document.getElementById('storageInput').value;
+    localStorage.setItem('myData', data);
     document.getElementById('storageOutput').innerText = 'Adat mentve a localStorage-be.';
   });
   document.getElementById('loadDataBtn').addEventListener('click', function() {
