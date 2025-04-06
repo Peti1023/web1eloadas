@@ -1,3 +1,19 @@
+// NAVIGÁCIÓ: A menüpontok közti váltás
+document.querySelectorAll('nav ul li a').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    // Aktivált link beállítása
+    document.querySelectorAll('nav ul li a').forEach(l => l.classList.remove('active'));
+    this.classList.add('active');
+    // Összes tartalmi szekció elrejtése
+    document.querySelectorAll('.content-section').forEach(section => section.style.display = 'none');
+    // A kiválasztott szekció megjelenítése
+    const sectionId = this.getAttribute('data-section');
+    document.getElementById(sectionId).style.display = 'block';
+  });
+});
+
+
 let tableData = [];
 let currentId = 1;
 let sortConfig = { column: null, ascending: true };
@@ -130,3 +146,4 @@ document.querySelectorAll('#dataTable th[data-column]').forEach(header => {
     renderTable();
   });
 });
+
