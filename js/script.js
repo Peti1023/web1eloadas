@@ -1,18 +1,3 @@
-// NAVIGÁCIÓ: A menüpontok közti váltás
-document.querySelectorAll('nav ul li a').forEach(link => {
-  link.addEventListener('click', function(e) {
-    e.preventDefault();
-    // Aktivált link beállítása
-    document.querySelectorAll('nav ul li a').forEach(l => l.classList.remove('active'));
-    this.classList.add('active');
-    // Összes tartalmi szekció elrejtése
-    document.querySelectorAll('.content-section').forEach(section => section.style.display = 'none');
-    // A kiválasztott szekció megjelenítése
-    const sectionId = this.getAttribute('data-section');
-    document.getElementById(sectionId).style.display = 'block';
-  });
-});
-
 let tableData = [];
 let currentId = 1;
 let sortConfig = { column: null, ascending: true };
@@ -67,43 +52,45 @@ function renderTable() {
   });
 }
 
-tableForm.addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const name = document.getElementById('name').value.trim();
-  const height = parseInt(document.getElementById('height').value);
-  const weight = parseInt(document.getElementById('weight').value);
-  const rowId = document.getElementById('rowId').value;
+if (tableForm) {
+  tableForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('name').value.trim();
+    const height = parseInt(document.getElementById('height').value);
+    const weight = parseInt(document.getElementById('weight').value);
+    const rowId = document.getElementById('rowId').value;
 
-  // Validációk
-  if (name.length < 7 || name.length > 30) {
-    alert("A név legalább 7 és legfeljebb 30 karakter hosszú lehet!");
-    return;
-  }
-
-  if (isNaN(height) || height < 70 || height > 200) {
-    alert("A magasságnak 70 és 200 között kell lennie!");
-    return;
-  }
-
-  if (isNaN(weight) || weight < 1 || weight > 150) {
-    alert("A súlynak 1 és 150 között kell lennie!");
-    return;
-  }
-
-  // Szerkesztés vagy új elem
-  if (rowId) {
-    const index = tableData.findIndex(item => item.id == rowId);
-    if (index !== -1) {
-      tableData[index] = { id: parseInt(rowId), name, height, weight };
+    // Validációk
+    if (name.length < 7 || name.length > 30) {
+      alert("A név legalább 7 és legfeljebb 30 karakter hosszú lehet!");
+      return;
     }
-  } else {
-    tableData.push({ id: currentId++, name, height, weight });
-  }
 
-  tableForm.reset();
-  renderTable();
-});
+    if (isNaN(height) || height < 70 || height > 200) {
+      alert("A magasságnak 70 és 200 között kell lennie!");
+      return;
+    }
+
+    if (isNaN(weight) || weight < 1 || weight > 150) {
+      alert("A súlynak 1 és 150 között kell lennie!");
+      return;
+    }
+
+    // Szerkesztés vagy új elem
+    if (rowId) {
+      const index = tableData.findIndex(item => item.id == rowId);
+      if (index !== -1) {
+        tableData[index] = { id: parseInt(rowId), name, height, weight };
+      }
+    } else {
+      tableData.push({ id: currentId++, name, height, weight });
+    }
+
+    tableForm.reset();
+    renderTable();
+  });
+}
 
 function editRow(id) {
   const row = tableData.find(item => item.id === id);
@@ -145,61 +132,74 @@ document.querySelectorAll('#dataTable th[data-column]').forEach(header => {
 
 // ---------- HTML5 PÉLDÁK ----------
 
+const saveDataBtn = document.getElementById('saveDataBtn');
+const loadDataBtn = document.getElementById('loadDataBtn');
+const startWorkerBtn = document.getElementById('startWorkerBtn');
+const getLocationBtn = document.getElementById('getLocationBtn');
+const dragSource = document.getElementById('dragSource');
+const dropTarget = document.getElementById('dropTarget');
+const canvas = document.getElementById('myCanvas');
+
 // Web Storage
-document.getElementById('saveDataBtn').addEventListener('click', function() {
-  localStorage.setItem('myData', 'Ez egy példa adat.');
-  document.getElementById('storageOutput').innerText = 'Adat mentve a localStorage-be.';
-});
-document.getElementById('loadDataBtn').addEventListener('click', function() {
-  const data = localStorage.getItem('myData');
-  document.getElementById('storageOutput').innerText = data ? data : 'Nincs adat.';
-});
+if (saveDataBtn && loadDataBtn) {
+  saveDataBtn.addEventListener('click', function() {
+    localStorage.setItem('myData', 'Ez egy példa adat.');
+    document.getElementById('storageOutput').innerText = 'Adat mentve a localStorage-be.';
+  });
+  loadDataBtn.addEventListener('click', function() {
+    const data = localStorage.getItem('myData');
+    document.getElementById('storageOutput').innerText = data ? data : 'Nincs adat.';
+  });
+}
 
 // Web Worker
 let myWorker;
-document.getElementById('startWorkerBtn').addEventListener('click', function() {
-  if (window.Worker) {
-    if (!myWorker) {
-      myWorker = new Worker('worker.js');
-      myWorker.onmessage = function(e) {
-        document.getElementById('workerOutput').innerText = 'Worker: ' + e.data;
+if (startWorkerBtn) {
+  startWorkerBtn.addEventListener('click', function() {
+    if (window.Worker) {
+      if (!myWorker) {
+        myWorker = new Worker('worker.js');
+        myWorker.onmessage = function(e) {
+          document.getElementById('workerOutput').innerText = 'Worker: ' + e.data;
+        }
       }
+      myWorker.postMessage('start');
+    } else {
+      document.getElementById('workerOutput').innerText = 'Web Workers nem támogatott.';
     }
-    myWorker.postMessage('start');
-  } else {
-    document.getElementById('workerOutput').innerText = 'Web Workers nem támogatott.';
-  }
-});
+  });
+}
 
 // Geolocation API
-document.getElementById('getLocationBtn').addEventListener('click', function() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      document.getElementById('locationOutput').innerText =
-        `Szélesség: ${position.coords.latitude}, Hosszúság: ${position.coords.longitude}`;
-    });
-  } else {
-    document.getElementById('locationOutput').innerText = 'Geolocation nem támogatott.';
-  }
-});
+if (getLocationBtn) {
+  getLocationBtn.addEventListener('click', function() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        document.getElementById('locationOutput').innerText =
+          `Szélesség: ${position.coords.latitude}, Hosszúság: ${position.coords.longitude}`;
+      });
+    } else {
+      document.getElementById('locationOutput').innerText = 'Geolocation nem támogatott.';
+    }
+  });
+}
 
 // Drag and Drop
-const dragSource = document.getElementById('dragSource');
-const dropTarget = document.getElementById('dropTarget');
-dragSource.addEventListener('dragstart', function(e) {
-  e.dataTransfer.setData('text/plain', 'Ez az adat.');
-});
-dropTarget.addEventListener('dragover', function(e) {
-  e.preventDefault();
-});
-dropTarget.addEventListener('drop', function(e) {
-  e.preventDefault();
-  dropTarget.innerText = 'Adat átvéve: ' + e.dataTransfer.getData('text/plain');
-});
+if (dragSource && dropTarget) {
+  dragSource.addEventListener('dragstart', function(e) {
+    e.dataTransfer.setData('text/plain', 'Ez az adat.');
+  });
+  dropTarget.addEventListener('dragover', function(e) {
+    e.preventDefault();
+  });
+  dropTarget.addEventListener('drop', function(e) {
+    e.preventDefault();
+    dropTarget.innerText = 'Adat átvéve: ' + e.dataTransfer.getData('text/plain');
+  });
+}
 
 // Canvas: Egyszerű rajz
-const canvas = document.getElementById('myCanvas');
-if (canvas.getContext) {
+if (canvas && canvas.getContext) {
   const ctx = canvas.getContext('2d');
   ctx.fillStyle = 'blue';
   ctx.fillRect(10, 10, 100, 50);
