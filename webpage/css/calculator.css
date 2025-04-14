@@ -1,0 +1,33 @@
+.calculator {
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    box-sizing: border-box; /* A szélesség a paddinggal együtt lesz számolva */
+  }
+  
+  /* Kijelző (display) stílusok */
+  .calculator-display {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    text-align: right;
+    box-sizing: border-box;
+  }
+  
+  /* Gombok */
+  .calculator-buttons button,
+  .scientific-buttons button {
+    width: 23%;
+    padding: 10px;
+    margin: 1%;
+    font-size: 1em;
+  }
+  
+  /* Tudományos gombok */
+  .scientific-buttons {
+    margin-top: 10px;
+  }
