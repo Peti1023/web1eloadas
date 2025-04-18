@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HTML5 példák</title>
   <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/script.js"></script>
 </head>
 <body>
   <header>
@@ -29,8 +30,15 @@
       </div>
       <div class="example">
         <h3>Web Worker</h3>
-        <button id="startWorkerBtn">Worker indítása</button>
-        <p id="workerOutput"></p>
+        <button onclick="startWorker()">Start Worker</button>
+        <p id="worker-output"></p>
+      </div>
+      <div id="sse">
+        <h2>Server-Sent Events</h2>
+        <p id="sse-output">Várakozás az üzenetre...</p>
+        <ul id="list">
+
+        </ul>
       </div>
       <div class="example">
         <h3>Geolocation API</h3>
@@ -57,6 +65,6 @@
   <footer>
     <p>Készítette: Fülöp Péter (GIOIS8) és Farkas Máté (HYDNQB)</p>
   </footer>
-  <script src="js/script.js"></script>
+
 </body>
 </html>

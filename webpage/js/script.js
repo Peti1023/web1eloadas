@@ -153,21 +153,32 @@ if (saveDataBtn && loadDataBtn) {
 }
 
 // Web Worker
-let myWorker;
-if (startWorkerBtn) {
-  startWorkerBtn.addEventListener('click', function() {
-    if (window.Worker) {
-      if (!myWorker) {
-        myWorker = new Worker('worker.js');
-        myWorker.onmessage = function(e) {
-          document.getElementById('workerOutput').innerText = 'Worker: ' + e.data;
-        }
-      }
-      myWorker.postMessage('start');
-    } else {
-      document.getElementById('workerOutput').innerText = 'Web Workers nem támogatott.';
+let worker;
+function startWorker() {
+  if (typeof Worker !== "undefined") {
+    if (!worker) {
+      worker = new Worker("js/worker.js");
+      worker.onmessage = function (event) {
+        document.getElementById("worker-output").innerText = event.data;
+      };
     }
-  });
+  } else {
+    alert("A böngésződ nem támogatja a Web Worker-t!");
+  }
+}
+
+if (typeof EventSource !== "undefined") {
+  const eventSource = new EventSource("../server.php");
+  eventSource.onmessage = (event) => {
+    const newElement = document.createElement("li");
+    const eventList = document.getElementById("list");
+
+    newElement.textContent = `message: ${event.data}`;
+    eventList.appendChild(newElement);
+  };
+} else {
+  document.getElementById("sse-output").innerText =
+    "A böngésződ nem támogatja az SSE-t!";
 }
 
 // Geolocation API
