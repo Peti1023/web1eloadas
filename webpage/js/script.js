@@ -166,7 +166,8 @@ function startWorker() {
     alert("A böngésződ nem támogatja a Web Worker-t!");
   }
 }
-
+ 
+// Server-sent Event
 if (typeof EventSource !== "undefined") {
   const eventSource = new EventSource("../server.php");
   eventSource.onmessage = (event) => {
